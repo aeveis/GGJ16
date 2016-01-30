@@ -14,8 +14,4 @@ public class NoJumping : Ritual
         //do nothing :)
     }
 
-    public override void Reset()
-    {
-        //do nothing :)
-    }
 }

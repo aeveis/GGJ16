@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 m_MoveDir;
     public float m_Speed = 0.1f;
-
+    public float m_MoveScale = 1.0f;
 
     public float m_JumpForce = 50.0f;
     private bool m_IsJumping;
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(m_MoveDir);
 
         if (!CheckObstacle())
-            transform.position += m_MoveDir.normalized * m_Speed * Time.deltaTime;
+            transform.position += (m_MoveDir.normalized * m_MoveScale)* m_Speed * Time.deltaTime;
 
         
 

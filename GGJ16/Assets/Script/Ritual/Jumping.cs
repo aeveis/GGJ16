@@ -58,11 +58,4 @@ public class Jumping : Ritual
         }
     }
 
-    /// <summary>
-    /// Reset the jumping mechanic
-    /// </summary>
-    public override void Reset()
-    {
-        m_CurrentTimeLanded = 0.0f;
-    }
 }
