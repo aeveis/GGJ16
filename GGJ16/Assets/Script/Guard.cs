@@ -46,8 +46,8 @@ public class Guard : MonoBehaviour
         m_ExclamationMark.SetActive(isOnSight);
         if (isOnSight && !m_Ritual.Check(transform))
         {
-            m_Ritual.Reset();
-            PlayerController.Instance.Reset();
+			Application.LoadLevel(Application.loadedLevel);
+            
         }
 
         if(m_PatrolPath.Length > 0)
