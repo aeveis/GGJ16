@@ -46,8 +46,8 @@ public class Guard : MonoBehaviour
         m_ExclamationMark.SetActive(isOnSight);
         if (isOnSight && !m_Ritual.Check(transform))
         {
-            Debug.Log("RESET!!!");
-            //Application.LoadLevel(Application.loadedLevel);
+            //Debug.Log("RESET!!!");
+            Application.LoadLevel(Application.loadedLevel);
             //StartCoroutine(ReloadLevel());
         }
 
