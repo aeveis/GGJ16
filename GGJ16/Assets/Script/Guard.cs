@@ -19,11 +19,24 @@ public class Guard : MonoBehaviour
     private int m_LastPathIndex;
     public PatrolPoint[] m_PatrolPath;
 
+    private bool m_Reversed;
+
+    public enum MovementType
+    {
+        Loop,
+        PingPong
+    }
+    public MovementType m_CurrentMovementType = MovementType.Loop;
+
+
     // Use this for initialization
     void Start()
     {
         m_LastPathIndex = 0;
         m_CurrentPathIndex = 0;
+
+        foreach (PatrolPoint p in m_PatrolPath)
+            p.GetComponent<Renderer>().enabled = false;
     }
 
     // Update is called once per frame
@@ -99,11 +112,35 @@ public class Guard : MonoBehaviour
     void GetNextPath()
     {
         m_LastPathIndex = m_CurrentPathIndex;
-        m_CurrentPathIndex++;
-        if (m_CurrentPathIndex >= m_PatrolPath.Length)
+
+        if (m_CurrentMovementType == MovementType.Loop)
         {
-            m_CurrentPathIndex = m_PatrolPath.Length - 1;
-            m_CurrentPathIndex = 0;
+            m_CurrentPathIndex++;
+            if (m_CurrentPathIndex >= m_PatrolPath.Length)
+            {
+                m_CurrentPathIndex = 0;
+            }
+        }
+        else
+        {
+            if (!m_Reversed)
+            {
+                m_CurrentPathIndex++;
+                if (m_CurrentPathIndex >= m_PatrolPath.Length)
+                {
+                    m_CurrentPathIndex = m_PatrolPath.Length - 2;
+                    m_Reversed = !m_Reversed;
+                }
+            }
+            else
+            {
+                m_CurrentPathIndex--;
+                if (m_CurrentPathIndex < 0)
+                {
+                    m_CurrentPathIndex = 1;
+                    m_Reversed = !m_Reversed;
+                }
+            }
         }
     }
 
