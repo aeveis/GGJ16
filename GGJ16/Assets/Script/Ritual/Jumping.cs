@@ -9,8 +9,14 @@ public class Jumping : Ritual
     private float m_CurrentTimeLanded = 0.0f;
 
     //act att
+    private float m_GroundVal;
     public float m_ElapsedTimeGround;
     private Rigidbody m_Rigidbody;
+
+    void Start()
+    {
+        m_ElapsedTimeGround = UnityEngine.Random.Range(0.0f, m_MaxTimeLanded);
+    }
 
     /// <summary>
     /// We should have a minimal interval to check
@@ -39,21 +45,26 @@ public class Jumping : Ritual
     /// <param name="p_Actor"></param>
     public override void Action(Transform p_Actor)
     {
+       
         if(m_Rigidbody == null)
             m_Rigidbody = p_Actor.GetComponent<Rigidbody>();
 
+        //todo: save this to stop getting the ref every frame
+        float groundLvl = p_Actor.GetComponent<Civilian>().m_GroundLevel;
+
         //keep jumping
-        if (p_Actor.position.y > PlayerController.Instance.m_GroundLevel)
+        if (p_Actor.position.y > groundLvl)
         {
             m_Rigidbody.velocity += Vector3.down * Time.deltaTime * PlayerController.Instance.m_FallSpeed;
         }
-        else if (p_Actor.position.y <= PlayerController.Instance.m_GroundLevel)
+        else if (p_Actor.position.y <= groundLvl)
         {
             m_ElapsedTimeGround += Time.deltaTime;
             if (m_ElapsedTimeGround > m_MaxTimeLanded)
             {
+
                 m_Rigidbody.velocity = Vector3.up * PlayerController.Instance.m_JumpForce;
-                m_ElapsedTimeGround = 0.0f;
+                m_ElapsedTimeGround = UnityEngine.Random.Range(0.0f, m_MaxTimeLanded);
             }
         }
     }
@@ -65,5 +76,6 @@ public class Jumping : Ritual
 
     public override void OnVisionConeExit()
     {
+
     }
 }
