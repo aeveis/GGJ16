@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="100">
+  <image source="../art/testTiles.png" width="320" height="320"/>
+  <terraintypes>
+   <terrain name="Walls" tile="10"/>
+  </terraintypes>
+  <tile id="0" terrain=",,,0"/>
+  <tile id="1" terrain=",,0,"/>
+  <tile id="2" terrain="0,0,0,"/>
+  <tile id="3" terrain="0,0,,"/>
+  <tile id="4" terrain="0,0,,0"/>
+  <tile id="10" terrain=",0,,"/>
+  <tile id="11" terrain="0,,,"/>
+  <tile id="12" terrain="0,,0,"/>
+  <tile id="14" terrain=",0,,0"/>
+  <tile id="22" terrain="0,,0,0"/>
+  <tile id="23" terrain=",,0,0"/>
+  <tile id="24" terrain=",0,0,0"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJy9lMEOgDAIQ+vmTpvxqP7/jyo3JMCYRkm4PStUagYwO12uzh2Gswv8WgPMCEvMdnUa1JuMZyruexC3G30wzpt1FZzlZ0FMj2ZsD967sdktvzgnGa5XxewNelWHGbmFSH2hxz3reUdl3UuC/u17manQs9ig7/smX5ae9MC7nYge98DbP6rXY97qWfvzHFp6kpG58bLz1z0/bfr/nfYKCgw=
+  </data>
+ </layer>
+</map>
