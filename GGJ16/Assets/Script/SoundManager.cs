@@ -26,7 +26,8 @@ public class SoundManager : MonoBehaviour {
 	}
 	public void FadeoutThenStop(int steps=5)
 	{
-		StartCoroutine (Fadeout (steps));
+
+		efxSource.Stop ();//StartCoroutine (Fadeout (steps));
 	}
 	public IEnumerator Fadeout(int steps) {
 		float step = efxSource.volume / steps;

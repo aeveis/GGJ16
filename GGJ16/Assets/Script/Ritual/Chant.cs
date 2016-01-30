@@ -45,7 +45,7 @@ public class Chant : Ritual
 			waitTime += Time.deltaTime;
 			switch (currentNote) {
 			case ChantNote.LONG:
-				if (waitTime >= chantFrequencyLength * 2) {
+				if (waitTime >= chantFrequencyLength * 3) {
 					wait = false;
 				}
 				break;
