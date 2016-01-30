@@ -74,15 +74,19 @@ public class Guard : MonoBehaviour
     private bool CheckPlayerIsOnSight()
     {
         float dist = (PlayerController.Instance.transform.position - transform.position).magnitude;
+        //Debug.Log("Dist ["+ dist + "] MaxDist ["+ m_Dist + "]");
         if (dist < m_Dist)
         {
+            Vector3 project = new Vector3(PlayerController.Instance.transform.position.x, transform.position.y, PlayerController.Instance.transform.position.z);
             Vector3 dirToPlayer = (PlayerController.Instance.transform.position - transform.position).normalized;
-            float angle = Vector3.Angle(transform.forward, dirToPlayer);
+            Vector3 dirToPlayerProj = (project - transform.position).normalized;
+            float angle = Vector3.Angle(transform.forward, dirToPlayerProj);
+            //Debug.Log(angle);
             if (angle < m_Angle) 
             {
                 RaycastHit hit;
-                //Debug.DrawRay(transform.position + Vector3.up, dirToPlayer * m_Dist, Color.red);
-                if (Physics.Raycast(transform.position, dirToPlayer, out hit, m_Dist))
+                Debug.DrawRay(transform.position + Vector3.up, dirToPlayer * m_Dist, Color.red);
+                if (Physics.Raycast(transform.position, dirToPlayer, out hit, m_Dist, 1 << LayerMask.NameToLayer("Default")))
                 {
                     //Debug.Log(hit.transform.name);
                     return (hit.transform.tag == "Player") ? true : false;
