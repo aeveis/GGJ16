@@ -9,6 +9,8 @@ public class Civilian : MonoBehaviour
     public float m_Speed = 1.0f;
     public Vector3 m_MoveDir;
 
+    public bool m_EnableMovement;
+
     //movement att
     private bool m_IsMoving;
     private float m_ElapsedTimeMoving;
@@ -17,10 +19,12 @@ public class Civilian : MonoBehaviour
     public float m_MoveTime = 1.0f;
     public float m_HitDistance = 1.0f;
 
+    public float m_GroundLevel = 0.6f;
+
     // Use this for initialization
     void Start()
     {
-
+        m_Ritual = Instantiate(m_Ritual);
     }
 
     // Update is called once per frame
@@ -28,7 +32,8 @@ public class Civilian : MonoBehaviour
     {
         m_Ritual.Action(transform);
 
-        Move();
+        if(m_EnableMovement)
+            Move();
     }
 
     void Move()
