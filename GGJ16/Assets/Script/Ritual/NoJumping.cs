@@ -14,4 +14,13 @@ public class NoJumping : Ritual
         //do nothing :)
     }
 
+    public override void OnVisionConeEnter()
+    {
+
+    }
+
+    public override void OnVisionConeExit()
+    {
+
+    }
 }

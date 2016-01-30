@@ -58,4 +58,12 @@ public class Jumping : Ritual
         }
     }
 
+    public override void OnVisionConeEnter()
+    {
+
+    }
+
+    public override void OnVisionConeExit()
+    {
+    }
 }

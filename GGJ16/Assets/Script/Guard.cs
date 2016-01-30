@@ -19,6 +19,8 @@ public class Guard : MonoBehaviour
     private int m_LastPathIndex;
     public PatrolPoint[] m_PatrolPath;
 
+    private bool m_IsPlayerOnSight;
+
     private bool m_Reversed;
 
     public enum MovementType
@@ -43,8 +45,16 @@ public class Guard : MonoBehaviour
     void Update()
     {
         bool isOnSight = CheckPlayerIsOnSight();
+
+        if (isOnSight && !m_IsPlayerOnSight)
+            m_Ritual.OnVisionConeEnter();
+        if (!isOnSight && m_IsPlayerOnSight)
+            m_Ritual.OnVisionConeExit();
+
+        m_IsPlayerOnSight = isOnSight;
+
         m_ExclamationMark.SetActive(isOnSight);
-        if (isOnSight && !m_Ritual.Check(transform))
+        if (m_IsPlayerOnSight && !m_Ritual.Check(transform))
         {
             //Debug.Log("RESET!!!");
             Application.LoadLevel(Application.loadedLevel);

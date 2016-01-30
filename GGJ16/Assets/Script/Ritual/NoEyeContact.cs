@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class NoEyeContact : Ritual
 {
@@ -20,6 +21,16 @@ public class NoEyeContact : Ritual
         return !PlayerController.Instance.CheckGuardIsOnSight(p_Actor.GetComponent<Guard>());
     }
     public override void Action(Transform p_Actor)
+    {
+
+    }
+
+    public override void OnVisionConeEnter()
+    {
+
+    }
+
+    public override void OnVisionConeExit()
     {
 
     }
