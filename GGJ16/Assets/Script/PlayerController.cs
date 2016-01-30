@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     public float m_SpinningSpeed = 2.0f;
     private bool m_Spinning;
 
+    public Transform[] m_SpawnPoints;
+
     private Quaternion m_InitialRotation;
 
     void Awake()
@@ -101,15 +103,8 @@ public class PlayerController : MonoBehaviour
 
     public void Reset()
     {
-        Portal[] portals = GameObject.FindObjectsOfType<Portal>();
-        foreach (Portal p in portals)
-        {
-            if (!p.m_IsExit)
-            {
-                transform.position = p.transform.position;
-                break;
-            }
-        }
+        if (m_SpawnPoints.Length > 0)
+            transform.position = m_SpawnPoints[Random.Range(0, m_SpawnPoints.Length)].position;
     }
 }
 
