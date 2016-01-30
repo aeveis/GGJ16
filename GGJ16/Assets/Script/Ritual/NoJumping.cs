@@ -4,7 +4,7 @@ using System;
 
 public class NoJumping : Ritual
 {
-    public override bool Check()
+    public override bool Check(Transform p_Actor)
     {
         return !PlayerController.Instance.IsJumping();
     }
