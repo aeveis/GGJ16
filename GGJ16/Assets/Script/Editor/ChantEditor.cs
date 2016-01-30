@@ -24,7 +24,8 @@ public class ChantObjEditor : Editor {
 		code.stringValue = chantPattern;
 
 		EditorGUILayout.PropertyField (serializedObject.FindProperty ("startBufferTime"));
-		EditorGUILayout.PropertyField (serializedObject.FindProperty ("chantSpeed"));
+		EditorGUILayout.PropertyField (serializedObject.FindProperty ("chantFrequencyLength"));
+		EditorGUILayout.PropertyField (serializedObject.FindProperty ("leeway"));
 		//EditorGUILayout.PropertyField (code);
 		serializedObject.ApplyModifiedProperties ();
 	}
