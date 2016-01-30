@@ -8,14 +8,13 @@ public class PlayerController : MonoBehaviour
     public Vector3 m_MoveDir;
     public float m_Speed = 0.1f;
     public float m_JumpForce = 50.0f;
+    private bool m_IsJumping;
     public float m_GroundLevel = 0.6f;
 
     private Rigidbody m_Rigidbody;
 
     public float m_SpinningSpeed = 2.0f;
     private bool m_Spinning;
-
-    private Quaternion m_LastRotation;
 
     private Quaternion m_InitialRotation;
 
@@ -31,6 +30,11 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("PlayerController Instance already exists.");
             Destroy(gameObject);
         }
+    }
+
+    public bool IsJumping()
+    {
+        return m_IsJumping;
     }
 
     // Use this for initialization
@@ -67,30 +71,15 @@ public class PlayerController : MonoBehaviour
         if(m_MoveDir != Vector3.zero && !m_Spinning)
             transform.rotation = Quaternion.LookRotation(m_MoveDir);
 
-        m_LastRotation = transform.rotation;
-
-
-        if (Input.GetButton("Jump") && transform.position.y < m_GroundLevel)
+        m_IsJumping = false;
+        if (Input.GetButtonDown("Jump") && transform.position.y <= m_GroundLevel)
+        {
             m_Rigidbody.AddForce(Vector3.up * m_JumpForce);
+            m_IsJumping = true;
+        }
 
-        if (Input.GetButton("Fire1") && !m_Spinning)
+        if (Input.GetButtonDown("Fire1") && !m_Spinning)
             StartCoroutine(Spin());
-    }
-
-    Vector3 SnapTo(Vector3 v3, float snapAngle)
-    {
-        float angle = Vector3.Angle(v3, Vector3.up);
-        if (angle < snapAngle / 2.0f)          // Cannot do cross product 
-            return Vector3.up * v3.magnitude;  //   with angles 0 & 180
-        if (angle > 180.0f - snapAngle / 2.0f)
-            return Vector3.down * v3.magnitude;
-
-        float t = Mathf.Round(angle / snapAngle);
-        float deltaAngle = (t * snapAngle) - angle;
-
-        Vector3 axis = Vector3.Cross(Vector3.up, v3);
-        Quaternion q = Quaternion.AngleAxis(deltaAngle, axis);
-        return q * v3;
     }
 
     IEnumerator Spin()
@@ -108,6 +97,19 @@ public class PlayerController : MonoBehaviour
 
         transform.rotation = m_InitialRotation;
         m_Spinning = false;
+    }
+
+    public void Reset()
+    {
+        Portal[] portals = GameObject.FindObjectsOfType<Portal>();
+        foreach (Portal p in portals)
+        {
+            if (!p.m_IsExit)
+            {
+                transform.position = p.transform.position;
+                break;
+            }
+        }
     }
 
 }
