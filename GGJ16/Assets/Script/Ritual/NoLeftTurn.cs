@@ -5,6 +5,7 @@ public class NoLeftTurn : Ritual {
 
 	//check att
 	//private Vector3 m_lastForward = 0.0f;
+	float m_oldHeadingAngle = 0.0f;
 
 	//act att
 	private Rigidbody m_Rigidbody;
@@ -15,8 +16,17 @@ public class NoLeftTurn : Ritual {
 	/// <returns></returns>
 	public override bool Check(Transform p_Actor)
 	{
-		Debug.Log("player rotation : " + PlayerController.Instance.transform.rotation);
-		return true;
+		Vector3 forward = PlayerController.Instance.transform.forward;
+		forward.y = 0; 
+		float headingAngle = Quaternion.LookRotation(forward).eulerAngles.y;
+		if (headingAngle < m_oldHeadingAngle)
+		{
+			return false;
+		} else {
+			m_oldHeadingAngle = headingAngle;
+			return true;
+		}
+
 	}
 
 	/// <summary>
