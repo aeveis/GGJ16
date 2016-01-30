@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
         if (!CheckObstacle())
         {
-            m_CurrentSpeed += Time.deltaTime * m_Acceleration;
+            m_CurrentSpeed += Time.deltaTime * Time.deltaTime * m_Acceleration;
             if (m_CurrentSpeed > m_Speed)
                 m_CurrentSpeed = m_Speed;
 
