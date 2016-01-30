@@ -1,2 +1,4 @@
 GGJ16/Library/*
 GGJ16/Temp/*
+*.csproj
+*.sln
