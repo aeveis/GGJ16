@@ -8,4 +8,14 @@ public class NoJumping : Ritual
     {
         return !PlayerController.Instance.IsJumping();
     }
+
+    public override void Action(Transform p_Actor)
+    {
+        //do nothing :)
+    }
+
+    public override void Reset()
+    {
+        //do nothing :)
+    }
 }

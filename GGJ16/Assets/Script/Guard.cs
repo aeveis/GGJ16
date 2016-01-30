@@ -25,6 +25,7 @@ public class Guard : MonoBehaviour
         m_ExclamationMark.SetActive(isOnSight);
         if (isOnSight && !m_Ritual.Check())
         {
+            m_Ritual.Reset();
             PlayerController.Instance.Reset();
         }
     }
