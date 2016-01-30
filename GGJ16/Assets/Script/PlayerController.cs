@@ -18,11 +18,13 @@ public class PlayerController : MonoBehaviour
 
     public float m_HitDistance = 1.0f;
 
-
     private Rigidbody m_Rigidbody;
 
     public float m_SpinningSpeed = 2.0f;
     private bool m_Spinning;
+
+	//keyboard control tweaks
+	private float keyb_timer = .2f;
 
     public Transform[] m_SpawnPoints;
 
@@ -69,16 +71,26 @@ public class PlayerController : MonoBehaviour
     {
         m_MoveDir = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
 
-        if (m_MoveDir.x < -0.5f)
+		float moveThreshold = 0.5f;
+
+		//make keyboard less sensitive
+		if (Input.anyKey || keyb_timer>0) {
+			moveThreshold = 0.8f;
+			keyb_timer -= Time.deltaTime;
+			if (Input.anyKey)
+				keyb_timer = .2f;
+		}
+		
+		if (m_MoveDir.x < -moveThreshold)
             m_MoveDir.x = -1.0f;
-        else if (m_MoveDir.x > 0.5f)
+		else if (m_MoveDir.x > moveThreshold)
             m_MoveDir.x = 1.0f;
         else
             m_MoveDir.x = 0.0f;
 
-        if (m_MoveDir.z < -0.5f)
+		if (m_MoveDir.z < -moveThreshold)
             m_MoveDir.z = -1.0f;
-        else if (m_MoveDir.z > 0.5f)
+		else if (m_MoveDir.z > moveThreshold)
             m_MoveDir.z = 1.0f;
         else
             m_MoveDir.z = 0.0f;
