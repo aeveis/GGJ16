@@ -7,9 +7,13 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 m_MoveDir;
     public float m_Speed = 0.1f;
+
+
     public float m_JumpForce = 50.0f;
     private bool m_IsJumping;
     public float m_GroundLevel = 0.6f;
+    public float m_FallSpeed = 10.0f;
+
 
     private Rigidbody m_Rigidbody;
 
@@ -73,12 +77,23 @@ public class PlayerController : MonoBehaviour
         if(m_MoveDir != Vector3.zero && !m_Spinning)
             transform.rotation = Quaternion.LookRotation(m_MoveDir);
 
-        m_IsJumping = false;
-        if (Input.GetButtonDown("Jump") && transform.position.y <= m_GroundLevel)
+
+        if (transform.position.y > m_GroundLevel)
         {
-            m_Rigidbody.AddForce(Vector3.up * m_JumpForce);
+            m_IsJumping = true;
+            m_Rigidbody.velocity += Vector3.down * Time.deltaTime * m_FallSpeed;
+        }
+        else if (Input.GetButtonDown("Jump") && transform.position.y <= m_GroundLevel)
+        {
+            m_Rigidbody.velocity = Vector3.up * m_JumpForce;
+            //m_Rigidbody.AddForce(Vector3.up * m_JumpForce);
             m_IsJumping = true;
         }
+        else
+        {
+            m_IsJumping = false;
+        }
+
 
         if (Input.GetButtonDown("Fire1") && !m_Spinning)
             StartCoroutine(Spin());

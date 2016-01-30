@@ -23,8 +23,7 @@ public class Guard : MonoBehaviour
        
         bool isOnSight = CheckPlayerIsOnSight();
         m_ExclamationMark.SetActive(isOnSight);
-
-        if (!m_Ritual.Check() && isOnSight)
+        if (isOnSight && !m_Ritual.Check())
         {
             PlayerController.Instance.Reset();
         }
@@ -40,7 +39,10 @@ public class Guard : MonoBehaviour
             float angle = Vector3.Angle(transform.forward, dirToPlayer);
             if (angle < m_Angle) 
             {
-                return true;
+                RaycastHit hit;
+                Debug.DrawRay(transform.position, dirToPlayer, Color.red);
+                if (Physics.Raycast(transform.position, dirToPlayer, out hit, m_Dist))
+                    return (hit.transform.tag == "Player") ? true : false;
             }
         }
         return false;
