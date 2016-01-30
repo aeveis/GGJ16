@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEditor;
 
-[CustomEditor(typeof(ChantObj))]
+[CustomEditor(typeof(Chant))]
 public class ChantObjEditor : Editor {
 
 	public override void OnInspectorGUI()
@@ -12,16 +12,19 @@ public class ChantObjEditor : Editor {
 		SerializedProperty prop = serializedObject.FindProperty("m_Script");
 		EditorGUILayout.PropertyField(prop, false);
 		GUI.enabled = true;
-		SerializedProperty code = serializedObject.FindProperty ("chantCode");
-		string chantCode = code.stringValue;
+		SerializedProperty code = serializedObject.FindProperty ("chantPattern");
+		string chantPattern = code.stringValue;
 
 		EditorGUILayout.LabelField ("Use only \"-\", \".\", and \" \" characters");
 		char chr = Event.current.character;
 		if ( chr !=' ' && chr !='.' && chr!='-') {
 			Event.current.character = '\0';
 		}
-		chantCode = EditorGUILayout.TextField (chantCode);
-		code.stringValue = chantCode;
+		chantPattern = EditorGUILayout.TextField (chantPattern);
+		code.stringValue = chantPattern;
+
+		EditorGUILayout.PropertyField (serializedObject.FindProperty ("startBufferTime"));
+		EditorGUILayout.PropertyField (serializedObject.FindProperty ("chantSpeed"));
 		//EditorGUILayout.PropertyField (code);
 		serializedObject.ApplyModifiedProperties ();
 	}
