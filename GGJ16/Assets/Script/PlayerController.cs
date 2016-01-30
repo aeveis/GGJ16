@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -44,6 +45,11 @@ public class PlayerController : MonoBehaviour
     public bool IsJumping()
     {
         return m_IsJumping;
+    }
+
+    public bool IsMoving()
+    {
+        return (m_MoveDir != Vector3.zero && m_CurrentSpeed > 0.0f);
     }
 
     // Use this for initialization
@@ -183,7 +189,7 @@ public class PlayerController : MonoBehaviour
     public void Reset()
     {
         if (m_SpawnPoints.Length > 0)
-            transform.position = m_SpawnPoints[Random.Range(0, m_SpawnPoints.Length)].position;
+            transform.position = m_SpawnPoints[UnityEngine.Random.Range(0, m_SpawnPoints.Length)].position;
     }
 }
 
