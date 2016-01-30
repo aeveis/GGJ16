@@ -20,8 +20,14 @@ public class NoLeftTurn : Ritual {
 		Vector3 forward = PlayerController.Instance.transform.forward;
 		forward.y = 0; 
 		float headingAngle = Quaternion.LookRotation(forward).eulerAngles.y;
+
+		Debug.Log("headingAngle = " + headingAngle);
+
+
+
 		if (headingAngle < m_oldHeadingAngle && headingAngle != 0)
 		{
+			m_oldHeadingAngle = headingAngle;
 			return false;
 		} else {
 			m_oldHeadingAngle = headingAngle;
