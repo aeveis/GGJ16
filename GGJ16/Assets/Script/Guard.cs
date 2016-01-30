@@ -39,6 +39,8 @@ public class Guard : MonoBehaviour
 
         foreach (PatrolPoint p in m_PatrolPath)
             p.GetComponent<Renderer>().enabled = false;
+
+        m_Ritual = Instantiate(m_Ritual);
     }
 
     // Update is called once per frame
