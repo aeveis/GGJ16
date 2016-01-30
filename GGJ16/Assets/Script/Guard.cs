@@ -85,7 +85,7 @@ public class Guard : MonoBehaviour
             if (angle < m_Angle) 
             {
                 RaycastHit hit;
-                Debug.DrawRay(transform.position + Vector3.up, dirToPlayer * m_Dist, Color.red);
+                //Debug.DrawRay(transform.position + Vector3.up, dirToPlayer * m_Dist, Color.red);
                 if (Physics.Raycast(transform.position, dirToPlayer, out hit, m_Dist, 1 << LayerMask.NameToLayer("Default")))
                 {
                     //Debug.Log(hit.transform.name);

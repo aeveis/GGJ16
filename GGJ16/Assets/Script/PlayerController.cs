@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
             transform.position += m_MoveDir.normalized * m_CurrentSpeed * Time.deltaTime;
         }
 
-        
+
 
 
         if (transform.position.y > m_GroundLevel)
@@ -141,22 +141,44 @@ public class PlayerController : MonoBehaviour
 
     public bool CheckGuardIsOnSight(Guard p_Guard)
     {
-        //m_Flashlight.spotAngle
         float dist = (p_Guard.transform.position - transform.position).magnitude;
+        //Debug.Log("Dist ["+ dist + "] MaxDist ["+ m_Dist + "]");
         if (dist < p_Guard.m_Dist)
         {
-            Vector3 dirToPlayer = (p_Guard.transform.position - transform.position).normalized;
-            float angle = Vector3.Angle(transform.forward, dirToPlayer);
+            Vector3 project = new Vector3(p_Guard.transform.position.x, transform.position.y, p_Guard.transform.position.z);
+            Vector3 dirToGuard = (p_Guard.transform.position - transform.position).normalized;
+            Vector3 dirToGuardProj = (project - transform.position).normalized;
+            float angle = Vector3.Angle(transform.forward, dirToGuardProj);
+            //Debug.Log(angle);
             if (angle < p_Guard.m_Angle)
             {
                 RaycastHit hit;
-                //Debug.DrawRay(transform.position, dirToPlayer, Color.red);
-                if (Physics.Raycast(transform.position, dirToPlayer, out hit, p_Guard.m_Dist))
+                //Debug.DrawRay(transform.position + Vector3.up, dirToGuard * p_Guard.m_Dist, Color.red);
+                if (Physics.Raycast(transform.position, dirToGuard, out hit, p_Guard.m_Dist))
                     return (hit.transform.tag == "Guard") ? true : false;
             }
         }
         return false;
     }
+
+    //public bool CheckGuardIsOnSight(Guard p_Guard)
+    //{
+    //    //m_Flashlight.spotAngle
+    //    float dist = (p_Guard.transform.position - transform.position).magnitude;
+    //    if (dist < p_Guard.m_Dist)
+    //    {
+    //        Vector3 dirToPlayer = (p_Guard.transform.position - transform.position).normalized;
+    //        float angle = Vector3.Angle(transform.forward, dirToPlayer);
+    //        if (angle < p_Guard.m_Angle)
+    //        {
+    //            RaycastHit hit;
+    //            //Debug.DrawRay(transform.position, dirToPlayer, Color.red);
+    //            if (Physics.Raycast(transform.position, dirToPlayer, out hit, p_Guard.m_Dist))
+    //                return (hit.transform.tag == "Guard") ? true : false;
+    //        }
+    //    }
+    //    return false;
+    //}
 
     public void Reset()
     {
