@@ -5,9 +5,11 @@ public class NoLeftTurn : Ritual {
 
 	//check att
 	//private Vector3 m_lastForward = 0.0f;
+	float m_oldHeadingAngle = 0.0f;
 
 	//act att
 	private Rigidbody m_Rigidbody;
+	public float m_anglesPerSecond;
 
 	/// <summary>
 	/// If your forward is ever more left than it was, you failed
@@ -15,8 +17,17 @@ public class NoLeftTurn : Ritual {
 	/// <returns></returns>
 	public override bool Check(Transform p_Actor)
 	{
-		Debug.Log("player rotation : " + PlayerController.Instance.transform.rotation);
-		return true;
+		Vector3 forward = PlayerController.Instance.transform.forward;
+		forward.y = 0; 
+		float headingAngle = Quaternion.LookRotation(forward).eulerAngles.y;
+		if (headingAngle < m_oldHeadingAngle && headingAngle != 0)
+		{
+			return false;
+		} else {
+			m_oldHeadingAngle = headingAngle;
+			return true;
+		}
+
 	}
 
 	/// <summary>
@@ -28,22 +39,8 @@ public class NoLeftTurn : Ritual {
 		if(m_Rigidbody == null)
 			m_Rigidbody = p_Actor.GetComponent<Rigidbody>();
 
-		//keep jumping
-		/*
-		if (p_Actor.position.y > PlayerController.Instance.m_GroundLevel)
-		{
-			m_Rigidbody.velocity += Vector3.down * Time.deltaTime * PlayerController.Instance.m_FallSpeed;
-		}
-		else if (p_Actor.position.y <= PlayerController.Instance.m_GroundLevel)
-		{
-			m_ElapsedTimeGround += Time.deltaTime;
-			if (m_ElapsedTimeGround > m_MaxTimeLanded)
-			{
-				m_Rigidbody.velocity = Vector3.up * PlayerController.Instance.m_JumpForce;
-				m_ElapsedTimeGround = 0.0f;
-			}
-		}
-		*/
+		//keep rotating
+		p_Actor.transform.Rotate( new Vector3(0.0f, m_anglesPerSecond * Time.deltaTime, 0.0f));
 	}
 
 }
