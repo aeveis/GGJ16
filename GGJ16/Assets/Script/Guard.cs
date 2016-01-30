@@ -58,7 +58,7 @@ public class Guard : MonoBehaviour
     IEnumerator ReloadLevel()
     {
         yield return null;
-        SceneController.Instance.ReloadLevel();
+        //SceneController.Instance.ReloadLevel();
     }
 
     private bool CheckPlayerIsOnSight()
