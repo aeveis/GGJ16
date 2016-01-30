@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
             m_Rigidbody = gameObject.AddComponent<Rigidbody>();
 
         m_InitialRotation = transform.rotation;
+
+        Reset();
     }
 
     // Update is called once per frame
@@ -72,7 +74,7 @@ public class PlayerController : MonoBehaviour
         else
             m_MoveDir.z = 0.0f;
 
-        transform.position += m_MoveDir.normalized * m_Speed;
+        transform.position += m_MoveDir.normalized * m_Speed * Time.deltaTime;
 
         if(m_MoveDir != Vector3.zero && !m_Spinning)
             transform.rotation = Quaternion.LookRotation(m_MoveDir);
