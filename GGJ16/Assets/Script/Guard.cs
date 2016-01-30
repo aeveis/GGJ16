@@ -41,7 +41,7 @@ public class Guard : MonoBehaviour
             if (angle < m_Angle) 
             {
                 RaycastHit hit;
-                Debug.DrawRay(transform.position, dirToPlayer, Color.red);
+                //Debug.DrawRay(transform.position, dirToPlayer, Color.red);
                 if (Physics.Raycast(transform.position, dirToPlayer, out hit, m_Dist))
                     return (hit.transform.tag == "Player") ? true : false;
             }

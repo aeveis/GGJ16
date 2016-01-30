@@ -13,7 +13,9 @@ public class Civilian : MonoBehaviour
     private bool m_IsMoving;
     private float m_ElapsedTimeMoving;
     private float m_ElapsedTimeStopped;
-
+    public float m_WaitTime = 1.0f;
+    public float m_MoveTime = 1.0f;
+    public float m_HitDistance = 1.0f;
 
     // Use this for initialization
     void Start()
@@ -34,7 +36,7 @@ public class Civilian : MonoBehaviour
         if (!m_IsMoving)
         {
             m_ElapsedTimeStopped += Time.deltaTime;
-            if (m_ElapsedTimeStopped > 1.0f)
+            if (m_ElapsedTimeStopped > m_WaitTime)
             {
                 m_MoveDir = new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
 
@@ -60,12 +62,11 @@ public class Civilian : MonoBehaviour
         if (m_IsMoving)
         {
             transform.position += m_MoveDir.normalized * m_Speed * Time.deltaTime;
-
             if (m_MoveDir != Vector3.zero)
                 transform.rotation = Quaternion.LookRotation(m_MoveDir);
 
             m_ElapsedTimeMoving += Time.deltaTime;
-            if (m_ElapsedTimeMoving > 1.0f)
+            if (m_ElapsedTimeMoving > m_MoveTime || CheckObstacle())
             {
                 m_IsMoving = false;
                 m_ElapsedTimeStopped = 0.0f;
@@ -75,6 +76,8 @@ public class Civilian : MonoBehaviour
 
     bool CheckObstacle()
     {
-        return false;
+        RaycastHit hit;
+        //Debug.DrawRay(transform.position, transform.forward, Color.red);
+        return Physics.Raycast(transform.position, transform.forward, out hit, m_HitDistance);
     }
 }
