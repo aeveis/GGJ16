@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Guard : MonoBehaviour
 {
     public Ritual m_Ritual;
-    public Light m_Flashlight;
 
     public float m_Dist = 10.0f;
     public float m_Angle = 90.0f;
@@ -46,17 +46,23 @@ public class Guard : MonoBehaviour
         m_ExclamationMark.SetActive(isOnSight);
         if (isOnSight && !m_Ritual.Check(transform))
         {
-			Application.LoadLevel(Application.loadedLevel);
-            
+            Debug.Log("RESET!!!");
+            //Application.LoadLevel(Application.loadedLevel);
+            //StartCoroutine(ReloadLevel());
         }
 
         if(m_PatrolPath.Length > 0)
             Move();
     }
 
+    IEnumerator ReloadLevel()
+    {
+        yield return null;
+        SceneController.Instance.ReloadLevel();
+    }
+
     private bool CheckPlayerIsOnSight()
     {
-        //m_Flashlight.spotAngle
         float dist = (PlayerController.Instance.transform.position - transform.position).magnitude;
         if (dist < m_Dist)
         {
@@ -65,9 +71,12 @@ public class Guard : MonoBehaviour
             if (angle < m_Angle) 
             {
                 RaycastHit hit;
-                //Debug.DrawRay(transform.position, dirToPlayer, Color.red);
+                //Debug.DrawRay(transform.position + Vector3.up, dirToPlayer * m_Dist, Color.red);
                 if (Physics.Raycast(transform.position, dirToPlayer, out hit, m_Dist))
+                {
+                    //Debug.Log(hit.transform.name);
                     return (hit.transform.tag == "Player") ? true : false;
+                }
             }
         }
         return false;
@@ -95,8 +104,6 @@ public class Guard : MonoBehaviour
                 GetNextPath();
             }
         }
-
-      
     }
 
     float GetCurrentWaitTime()
