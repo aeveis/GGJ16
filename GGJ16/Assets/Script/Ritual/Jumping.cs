@@ -16,7 +16,7 @@ public class Jumping : Ritual
     /// We should have a minimal interval to check
     /// </summary>
     /// <returns></returns>
-    public override bool Check()
+    public override bool Check(Transform p_Actor)
     {
         if (!PlayerController.Instance.IsJumping())
         {

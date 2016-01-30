@@ -130,6 +130,25 @@ public class PlayerController : MonoBehaviour
         m_Spinning = false;
     }
 
+    private bool CheckGuardIsOnSight(Guard p_Guard)
+    {
+        //m_Flashlight.spotAngle
+        float dist = (p_Guard.transform.position - transform.position).magnitude;
+        if (dist < p_Guard.m_Dist)
+        {
+            Vector3 dirToPlayer = (p_Guard.transform.position - transform.position).normalized;
+            float angle = Vector3.Angle(transform.forward, dirToPlayer);
+            if (angle < p_Guard.m_Angle)
+            {
+                RaycastHit hit;
+                //Debug.DrawRay(transform.position, dirToPlayer, Color.red);
+                if (Physics.Raycast(transform.position, dirToPlayer, out hit, p_Guard.m_Dist))
+                    return (hit.transform.tag == "Guard") ? true : false;
+            }
+        }
+        return false;
+    }
+
     public void Reset()
     {
         if (m_SpawnPoints.Length > 0)

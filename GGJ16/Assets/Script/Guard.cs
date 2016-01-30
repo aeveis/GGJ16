@@ -42,10 +42,9 @@ public class Guard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
         bool isOnSight = CheckPlayerIsOnSight();
         m_ExclamationMark.SetActive(isOnSight);
-        if (isOnSight && !m_Ritual.Check())
+        if (isOnSight && !m_Ritual.Check(transform))
         {
             m_Ritual.Reset();
             PlayerController.Instance.Reset();
