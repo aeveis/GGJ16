@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public float m_GroundLevel = 0.6f;
     public float m_FallSpeed = 10.0f;
 
+    public float m_HitDistance = 1.0f;
+
 
     private Rigidbody m_Rigidbody;
 
@@ -74,10 +76,13 @@ public class PlayerController : MonoBehaviour
         else
             m_MoveDir.z = 0.0f;
 
-        transform.position += m_MoveDir.normalized * m_Speed * Time.deltaTime;
-
-        if(m_MoveDir != Vector3.zero && !m_Spinning)
+        if (m_MoveDir != Vector3.zero && !m_Spinning)
             transform.rotation = Quaternion.LookRotation(m_MoveDir);
+
+        if (!CheckObstacle())
+            transform.position += m_MoveDir.normalized * m_Speed * Time.deltaTime;
+
+        
 
 
         if (transform.position.y > m_GroundLevel)
@@ -99,6 +104,13 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1") && !m_Spinning)
             StartCoroutine(Spin());
+    }
+
+    bool CheckObstacle()
+    {
+        RaycastHit hit;
+        //Debug.DrawRay(transform.position, transform.forward, Color.red);
+        return Physics.Raycast(transform.position, transform.forward, out hit, m_HitDistance);
     }
 
     IEnumerator Spin()
