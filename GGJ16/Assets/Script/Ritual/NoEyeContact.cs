@@ -3,7 +3,6 @@ using System.Collections;
 
 public class NoEyeContact : Ritual
 {
-
     // Use this for initialization
     void Start()
     {
@@ -18,15 +17,9 @@ public class NoEyeContact : Ritual
 
     public override bool Check(Transform p_Actor)
     {
-
-        return false;
+        return !PlayerController.Instance.CheckGuardIsOnSight(p_Actor.GetComponent<Guard>());
     }
     public override void Action(Transform p_Actor)
-    {
-
-    }
-
-    public override void Reset()
     {
 
     }
