@@ -7,7 +7,7 @@ public class NoLeftTurn : Ritual
 
     //check att
     //private Vector3 m_lastForward = 0.0f;
-    float m_oldHeadingAngle = 0.0f;
+    int m_oldHeadingAngle = 0;
 
     //act att
     private Rigidbody m_Rigidbody;
@@ -17,26 +17,38 @@ public class NoLeftTurn : Ritual
     /// If your forward is ever more left than it was, you failed
     /// </summary>
     /// <returns></returns>
-    public override bool Check(Transform p_Actor)
+    public override bool Check(Transform p_Actor) //false is you're caught
     {
         Vector3 forward = PlayerController.Instance.transform.forward;
         forward.y = 0;
-        float headingAngle = Quaternion.LookRotation(forward).eulerAngles.y;
+		int headingAngle = (int)(Quaternion.LookRotation(forward).eulerAngles.y);
 
         //Debug.Log("headingAngle = " + headingAngle);
 
+		bool good = true;
 
-
-        if (headingAngle < m_oldHeadingAngle && headingAngle != 0)
-        {
-            m_oldHeadingAngle = headingAngle;
-            return false;
-        }
-        else
-        {
-            m_oldHeadingAngle = headingAngle;
-            return true;
-        }
+		if (headingAngle == 0 && m_oldHeadingAngle == 270){
+			Debug.Log("1");
+			good = true;
+		} else if (headingAngle == 270 && m_oldHeadingAngle == 0){
+			Debug.Log("2");
+			good = false;
+		} else if (headingAngle == 0 && m_oldHeadingAngle == 315) {
+			Debug.Log("3");
+			good = true;
+		} else if (headingAngle == 315 && m_oldHeadingAngle == 0) {
+			Debug.Log("4");
+			good = false;
+		} else if (Math.Abs(headingAngle - m_oldHeadingAngle) > 95) {
+			good = false;
+			Debug.Log("5");
+		} else if (headingAngle < m_oldHeadingAngle){ 
+			Debug.Log("6");
+			good = false;
+		}
+		m_oldHeadingAngle = headingAngle;
+        return good;
+        
 
     }
 
@@ -55,11 +67,13 @@ public class NoLeftTurn : Ritual
 
     public override void OnVisionConeEnter()
     {
-        Debug.Log("OnVisionConeEnter");
+		Vector3 forward = PlayerController.Instance.transform.forward;
+		forward.y = 0;
+		int headingAngle = (int)(Quaternion.LookRotation(forward).eulerAngles.y);
+		m_oldHeadingAngle = headingAngle;
     }
 
     public override void OnVisionConeExit()
     {
-        Debug.Log("OnVisionConeExit");
     }
 }
