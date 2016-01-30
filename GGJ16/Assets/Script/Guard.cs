@@ -11,32 +11,10 @@ public class Guard : MonoBehaviour
 
     public GameObject m_ExclamationMark;
 
-    //movement att
-    private float m_TimeOfArrival;
-    public float m_Speed = 5.0f;
-    public bool m_IsMoving;
-    private int m_CurrentPathIndex;
-    private int m_LastPathIndex;
-    public PatrolPoint[] m_PatrolPath;
-
-    private bool m_Reversed;
-
-    public enum MovementType
-    {
-        Loop,
-        PingPong
-    }
-    public MovementType m_CurrentMovementType = MovementType.Loop;
-
-
     // Use this for initialization
     void Start()
     {
-        m_LastPathIndex = 0;
-        m_CurrentPathIndex = 0;
-
-        foreach (PatrolPoint p in m_PatrolPath)
-            p.GetComponent<Renderer>().enabled = false;
+        
     }
 
     // Update is called once per frame
@@ -50,9 +28,6 @@ public class Guard : MonoBehaviour
             m_Ritual.Reset();
             PlayerController.Instance.Reset();
         }
-
-        if(m_PatrolPath.Length > 0)
-            Move();
     }
 
     private bool CheckPlayerIsOnSight()
@@ -73,75 +48,5 @@ public class Guard : MonoBehaviour
         }
         return false;
     }
-
-    void Move()
-    {
-        if (m_IsMoving)
-        {
-            Vector3 dir = m_PatrolPath[m_CurrentPathIndex].transform.position - transform.position;
-
-            if (Time.time - m_TimeOfArrival > m_PatrolPath[m_LastPathIndex].m_WaitTime)
-            {
-                transform.position += dir.normalized * m_Speed * Time.deltaTime;
-                if (dir != Vector3.zero)
-                    transform.rotation = Quaternion.LookRotation(dir);
-            }
-
-            if (dir.sqrMagnitude < 0.2f * 0.2f)
-            {
-                //snap pos and rotation
-                transform.position = m_PatrolPath[m_CurrentPathIndex].transform.position;
-                transform.forward = m_PatrolPath[m_CurrentPathIndex].transform.forward;
-                m_TimeOfArrival = Time.time;
-                GetNextPath();
-            }
-        }
-
-      
-    }
-
-    float GetCurrentWaitTime()
-    {
-        int indexWait = m_CurrentPathIndex - 1;
-        if (indexWait < 0)
-            indexWait = m_PatrolPath.Length - 1;
-
-        return m_PatrolPath[indexWait].m_WaitTime;
-    }
-
-    void GetNextPath()
-    {
-        m_LastPathIndex = m_CurrentPathIndex;
-
-        if (m_CurrentMovementType == MovementType.Loop)
-        {
-            m_CurrentPathIndex++;
-            if (m_CurrentPathIndex >= m_PatrolPath.Length)
-            {
-                m_CurrentPathIndex = 0;
-            }
-        }
-        else
-        {
-            if (!m_Reversed)
-            {
-                m_CurrentPathIndex++;
-                if (m_CurrentPathIndex >= m_PatrolPath.Length)
-                {
-                    m_CurrentPathIndex = m_PatrolPath.Length - 2;
-                    m_Reversed = !m_Reversed;
-                }
-            }
-            else
-            {
-                m_CurrentPathIndex--;
-                if (m_CurrentPathIndex < 0)
-                {
-                    m_CurrentPathIndex = 1;
-                    m_Reversed = !m_Reversed;
-                }
-            }
-        }
-    }
-
+   
 }
