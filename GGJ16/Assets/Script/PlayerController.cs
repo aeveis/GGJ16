@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-        if (transform.position.y > m_GroundLevel)
+		if (transform.position.y > m_GroundLevel)
         {
             m_IsJumping = true;
             m_Rigidbody.velocity += Vector3.down * Time.deltaTime * m_FallSpeed;
