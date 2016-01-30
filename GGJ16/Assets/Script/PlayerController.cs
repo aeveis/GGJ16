@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
         m_Spinning = false;
     }
 
-    private bool CheckGuardIsOnSight(Guard p_Guard)
+    public bool CheckGuardIsOnSight(Guard p_Guard)
     {
         //m_Flashlight.spotAngle
         float dist = (p_Guard.transform.position - transform.position).magnitude;
