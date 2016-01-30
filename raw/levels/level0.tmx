@@ -3,7 +3,7 @@
  <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="100">
   <image source="../art/testTiles.png" width="320" height="320"/>
   <terraintypes>
-   <terrain name="Walls" tile="10"/>
+   <terrain name="walls" tile="22"/>
   </terraintypes>
   <tile id="0" terrain=",,,0"/>
   <tile id="1" terrain=",,0,"/>
@@ -20,7 +20,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJy9lMEOgDAIQ+vmTpvxqP7/jyo3JMCYRkm4PStUagYwO12uzh2Gswv8WgPMCEvMdnUa1JuMZyruexC3G30wzpt1FZzlZ0FMj2ZsD967sdktvzgnGa5XxewNelWHGbmFSH2hxz3reUdl3UuC/u17manQs9ig7/smX5ae9MC7nYge98DbP6rXY97qWfvzHFp6kpG58bLz1z0/bfr/nfYKCgw=
+   eJzdlLEOgCAMRKvoJMZR+f8flW6kqccV42KTGwj1cZTWJCIL0FqVyD1d74LjADl2D+X+gbdV5QHeWXU5mgNntx6e3j6bXIYXCXQX7z4MD/Vq1HukF77gTYJrEuV59WH7z/Yq47kAHuu57c/oG1qeemPrx/BG/gdt9Ob/7bx5PDRvPRXzva5vEZUIpQ==
   </data>
  </layer>
 </map>
