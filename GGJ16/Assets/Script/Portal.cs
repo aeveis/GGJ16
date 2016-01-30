@@ -7,8 +7,11 @@ public class Portal : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            //Application.LoadLevel(Application.loadedLevel + 1);
-            Debug.Log(" NEXT LEVEL!");
+            int nextLevel = Application.loadedLevel + 1;
+            if (nextLevel >= Application.levelCount)
+                nextLevel = 0;
+
+            Application.LoadLevel(nextLevel);
         }
     }
 }
