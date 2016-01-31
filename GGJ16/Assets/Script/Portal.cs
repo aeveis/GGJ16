@@ -21,5 +21,11 @@ public class Portal : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.R)) {
 			Application.LoadLevel (Application.loadedLevel);
 		}
+		if (Input.GetKeyDown (KeyCode.RightBracket)) {
+			Application.LoadLevel (Application.loadedLevel+1);
+		}
+		if (Input.GetKeyDown (KeyCode.LeftBracket)) {
+			Application.LoadLevel (Application.loadedLevel-1<0?0:(Application.loadedLevel-1));
+		}
 	}
 }
