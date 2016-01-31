@@ -57,7 +57,7 @@ public class Chant : Ritual
 			}
 
 			if (!wait) {
-				SoundManager.instance.FadeoutThenStop ();
+				//SoundManager.instance.FadeoutThenStop ();
 				patternIndex = (patternIndex+1)%chantPattern.Length;
 				cstate = ChantState.START;
 			}

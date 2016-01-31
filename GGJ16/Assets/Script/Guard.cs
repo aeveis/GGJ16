@@ -23,6 +23,9 @@ public class Guard : MonoBehaviour
 
     private bool m_Reversed;
 
+    private bool m_IsCaught;
+    public AudioClip[] m_CaughtClips;
+
     public enum MovementType
     {
         Loop,
@@ -59,7 +62,12 @@ public class Guard : MonoBehaviour
         if (m_IsPlayerOnSight && !m_Ritual.Check(transform))
         {
             //Debug.Log("RESET!!!");
-            Application.LoadLevel(Application.loadedLevel);
+            if (!m_IsCaught)
+            {
+                m_IsCaught = true;
+                StartCoroutine(Caught());
+            }
+            
             //StartCoroutine(ReloadLevel());
         }
 
@@ -67,9 +75,20 @@ public class Guard : MonoBehaviour
             Move();
     }
 
-    IEnumerator ReloadLevel()
+    IEnumerator Caught()
     {
-        yield return null;
+        float timeToWait = 1.0f;
+        if (m_CaughtClips.Length > 0)
+        {
+            AudioClip clip = m_CaughtClips[UnityEngine.Random.Range(0, m_CaughtClips.Length - 1)];
+            timeToWait = clip.length;
+            SoundManager.instance.PlaySingle(clip);
+        }
+        yield return new WaitForSeconds(timeToWait);
+
+
+        m_IsCaught = false;
+        Application.LoadLevel(Application.loadedLevel);
         //SceneController.Instance.ReloadLevel();
     }
 
@@ -165,5 +184,4 @@ public class Guard : MonoBehaviour
             }
         }
     }
-
 }

@@ -3,7 +3,6 @@ using System.Collections;
 
 public class SoundManager : MonoBehaviour {
 	
-	public AudioSource efxSource;
 	public static SoundManager instance = null;
 
 	void Awake ()
@@ -18,23 +17,13 @@ public class SoundManager : MonoBehaviour {
 
 	public void PlaySingle(AudioClip clip)
 	{
-		efxSource.clip = clip;
-
-		//Play the clip.
-		efxSource.volume = 1;
-		efxSource.Play ();
-	}
-	public void FadeoutThenStop(int steps=5)
-	{
-
-		efxSource.Stop ();//StartCoroutine (Fadeout (steps));
-	}
-	public IEnumerator Fadeout(int steps) {
-		float step = efxSource.volume / steps;
-		while (efxSource.volume > 0) {
-			efxSource.volume -= step;
-			yield return null;
-		}
-		efxSource.Stop ();
+        GameObject mySound = new GameObject(clip.name);
+        mySound.transform.parent = transform;
+        AudioSource source = mySound.AddComponent<AudioSource>();
+        source.clip = clip;
+        source.spatialBlend = 0.0f;
+        //Play the clip.
+        source.volume = 1;
+        source.Play ();
 	}
 }
