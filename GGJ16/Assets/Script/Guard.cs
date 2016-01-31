@@ -42,7 +42,11 @@ public class Guard : MonoBehaviour
         m_CurrentPathIndex = 0;
 
         foreach (PatrolPoint p in m_PatrolPath)
-            p.GetComponent<Renderer>().enabled = false;
+        {
+            Renderer r = p.GetComponent<Renderer>();
+            if(r != null)
+                r.enabled = false;
+        }
 
         m_Ritual = Instantiate(m_Ritual);
 
