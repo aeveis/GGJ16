@@ -94,6 +94,7 @@ public class Guard : MonoBehaviour
         //Time.timeScale = 0.0f;
         m_EyeMark.SetActive(false);
         m_ExclamationMark.SetActive(true);
+		PlayerController.Instance.m_MoveIsBlocked = true;
 
         Civilian[] allcivs = GameObject.FindObjectsOfType<Civilian>();
         foreach (Civilian c in allcivs)
