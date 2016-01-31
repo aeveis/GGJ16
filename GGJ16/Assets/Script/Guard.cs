@@ -48,8 +48,10 @@ public class Guard : MonoBehaviour
                 r.enabled = false;
         }
 
-        m_Ritual = Instantiate(m_Ritual);
-
+		if (m_Ritual != null)
+			m_Ritual = Instantiate (m_Ritual);
+		else
+			Debug.Log ("Ritual is null");
         m_EyeMark.SetActive(false);
         m_ExclamationMark.SetActive(false);
     }
@@ -59,27 +61,29 @@ public class Guard : MonoBehaviour
     {
         bool isOnSight = CheckPlayerIsOnSight();
 
-        if (isOnSight && !m_IsPlayerOnSight)
-            m_Ritual.OnVisionConeEnter();
-        if (!isOnSight && m_IsPlayerOnSight)
-            m_Ritual.OnVisionConeExit();
+		if (m_Ritual != null) {
+			if (isOnSight && !m_IsPlayerOnSight)
+				m_Ritual.OnVisionConeEnter ();
+			if (!isOnSight && m_IsPlayerOnSight)
+				m_Ritual.OnVisionConeExit ();
+		}
 
         m_IsPlayerOnSight = isOnSight;
 
         bool shouldEnable = isOnSight && !m_ExclamationMark.activeSelf;
         m_EyeMark.SetActive(shouldEnable);
 
-        if (m_IsPlayerOnSight && !m_Ritual.Check(transform))
-        {
-            //Debug.Log("RESET!!!");
-            if (!m_IsCaught)
-            {
-                m_IsCaught = true;
-                StartCoroutine(Caught());
-            }
+		if (m_Ritual != null) {
+			if (m_IsPlayerOnSight && !m_Ritual.Check (transform)) {
+				//Debug.Log("RESET!!!");
+				if (!m_IsCaught) {
+					m_IsCaught = true;
+					StartCoroutine (Caught ());
+				}
             
-            //StartCoroutine(ReloadLevel());
-        }
+				//StartCoroutine(ReloadLevel());
+			}
+		}
 
         if(m_PatrolPath.Length > 0)
             Move();
