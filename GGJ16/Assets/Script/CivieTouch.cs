@@ -4,6 +4,7 @@ using System.Collections;
 public class CivieTouch : MonoBehaviour {
 
 	public GameObject exclamation;
+	public AudioClip[] m_touchedClips;
 	// Use this for initialization
 	void Start () {
 	
@@ -18,6 +19,7 @@ public class CivieTouch : MonoBehaviour {
 		Debug.Log (col.gameObject.name);
 		if (col.gameObject.name == "Player") {
 			exclamation.SetActive (true);
+			SoundManager.instance.PlaySingle (m_touchedClips [Random.Range (0, m_touchedClips.Length - 1)]);
 			StartCoroutine (waitandTurnOff ());
 		}
 	}
