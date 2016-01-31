@@ -1,14 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Ritual\Chant.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Shaders\BillBoard.shader">
     <Files>
-      <File FileName="Assets\Script\Ritual\Chant.cs" Line="58" Column="2" />
-      <File FileName="Assets\Script\Ritual\Jumping.cs" Line="60" Column="1" />
-      <File FileName="Assets\Script\Ritual\NoEyeContact.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\PlayerController.cs" Line="4" Column="1" />
-      <File FileName="Assets\Script\Civilian.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Editor\ChantEditor.cs" Line="27" Column="1" />
-      <File FileName="Assets\Script\Guard.cs" Line="1" Column="1" />
+      <File FileName="Assets\Shaders\BillBoard.shader" Line="51" Column="2" />
+      <File FileName="Assets\Shaders\CGBillboard.shader" Line="31" Column="11" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

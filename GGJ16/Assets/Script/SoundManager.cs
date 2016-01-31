@@ -17,6 +17,7 @@ public class SoundManager : MonoBehaviour {
 		DontDestroyOnLoad (gameObject);
 
 		bgMusicSource = gameObject.AddComponent<AudioSource>();
+		bgMusicSource.volume = .5f;
 		bgMusicSource.loop = true;
 		bgMusicSource.clip = bgMusic;
 		bgMusicSource.Play ();

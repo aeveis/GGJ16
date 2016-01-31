@@ -6,6 +6,7 @@
 
  	Tags { "QUEUE"="Transparent" "IGNOREPROJECTOR"="true" "RenderType"="Transparent" }
  	 ZWrite Off
+ 	 ZTest Off
 	 Blend SrcAlpha One
 
       Pass {   
