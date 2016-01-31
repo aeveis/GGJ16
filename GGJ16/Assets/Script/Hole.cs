@@ -25,33 +25,26 @@ public class Hole : MonoBehaviour
         }
     }
 
-	void LateUpdate()
-	{
-		if (m_isDying)
-			PlayerController.Instance.transform.position = m_playerPosition;
-	}
 
 	public IEnumerator StartHoleDeath()
 	{
-		yield return new WaitForSeconds(0.2f);
-		if (!PlayerController.Instance.IsJumping()){
-			m_isDying = true;
-			m_playerPosition =  PlayerController.Instance.transform.position + (transform.position - PlayerController.Instance.transform.position).normalized * 0.5f;
+		m_isDying = true;
+		PlayerController.Instance.m_MoveIsBlocked = true;
+		m_playerPosition =  PlayerController.Instance.transform.position + (transform.position - PlayerController.Instance.transform.position).normalized * 0.5f;
+		yield return null;
+		SoundManager.instance.PlaySingle(fallSound);
+		float time = 0.0f;
+		while(time < 1.0f)
+		{
+			time += Time.deltaTime;
+			PlayerController.Instance.transform.localScale = Vector3.one * (1.0f - time);
+			//PlayerController.Instance.transform.position = m_playerPosition;
 			yield return null;
-			SoundManager.instance.PlaySingle(fallSound);
-			float time = 0.0f;
-			while(time < 1.0f)
-			{
-				time += Time.deltaTime;
-				PlayerController.Instance.transform.localScale = Vector3.one * (1.0f - time);
-
-				yield return null;
-			}
-
-			//reset
-			Application.LoadLevel(Application.loadedLevel);
-			//yield return new WaitForSeconds(0.1f);
-			m_isDying = false;
 		}
+
+		//reset
+		Application.LoadLevel(Application.loadedLevel);
+		//yield return new WaitForSeconds(0.1f);
+		m_isDying = false;
 	}
 }
