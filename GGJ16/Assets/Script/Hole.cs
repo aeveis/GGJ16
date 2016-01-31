@@ -5,8 +5,9 @@ using System;
 public class Hole : MonoBehaviour
 {
 
-	bool m_isDying;
-	Vector3 m_playerPosition;
+	private bool m_isDying;
+	private Vector3 m_playerPosition;
+	public AudioClip fallSound;
 
     void OnTriggerEnter(Collider other)
     {
@@ -29,6 +30,7 @@ public class Hole : MonoBehaviour
 		m_isDying = true;
 		m_playerPosition =  PlayerController.Instance.transform.position + (transform.position - PlayerController.Instance.transform.position).normalized * 0.5f;
 		yield return null;
+		SoundManager.instance.PlaySingle(fallSound);
 		float time = 0.0f;
 		while(time < 1.0f)
 		{
