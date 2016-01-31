@@ -22,7 +22,11 @@ public class Hole : MonoBehaviour
         {
 			if (!m_isDying)
 				StartCoroutine(StartHoleDeath());
-        }
+        } 
+		if (other.attachedRigidbody.gameObject.name.Contains("Civie"))
+		{
+			other.attachedRigidbody.gameObject.SetActive(false);
+		} 
     }
 
 
