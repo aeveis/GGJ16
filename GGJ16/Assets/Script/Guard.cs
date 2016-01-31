@@ -10,6 +10,7 @@ public class Guard : MonoBehaviour
     public float m_Angle = 90.0f;
 
     public GameObject m_ExclamationMark;
+    public GameObject m_EyeMark;
 
     //movement att
     private float m_TimeOfArrival;
@@ -44,6 +45,9 @@ public class Guard : MonoBehaviour
             p.GetComponent<Renderer>().enabled = false;
 
         m_Ritual = Instantiate(m_Ritual);
+
+        m_EyeMark.SetActive(false);
+        m_ExclamationMark.SetActive(false);
     }
 
     // Update is called once per frame
@@ -58,7 +62,9 @@ public class Guard : MonoBehaviour
 
         m_IsPlayerOnSight = isOnSight;
 
-        m_ExclamationMark.SetActive(isOnSight);
+        bool shouldEnable = isOnSight && !m_ExclamationMark.activeSelf;
+        m_EyeMark.SetActive(shouldEnable);
+
         if (m_IsPlayerOnSight && !m_Ritual.Check(transform))
         {
             //Debug.Log("RESET!!!");
@@ -78,6 +84,8 @@ public class Guard : MonoBehaviour
     IEnumerator Caught()
     {
         //Time.timeScale = 0.0f;
+        m_EyeMark.SetActive(false);
+        m_ExclamationMark.SetActive(true);
 
         Civilian[] allcivs = GameObject.FindObjectsOfType<Civilian>();
         foreach (Civilian c in allcivs)
@@ -85,7 +93,9 @@ public class Guard : MonoBehaviour
 
         yield return null;
 
-       
+        Vector3 initialCameraPos = Camera.main.transform.position;
+        Vector3 tgt = new Vector3(transform.position.x, initialCameraPos.y, transform.position.z);
+
 
         float timeToWait = 1.0f;
         if (m_CaughtClips.Length > 0)
@@ -100,9 +110,12 @@ public class Guard : MonoBehaviour
         {
             time += Time.deltaTime;
 
-            float val = Camera.main.orthographicSize - Time.deltaTime * 20.0f;
-            if (val < 5.0f)
-                val = 5.0f;
+            
+            Camera.main.transform.position = Vector3.Lerp(initialCameraPos, tgt, time * 0.5f);
+
+            float val = Camera.main.orthographicSize - Time.deltaTime * 15.0f;
+            if (val < 8.0f)
+                val = 8.0f;
 
             Camera.main.orthographicSize = val;
             yield return null;
