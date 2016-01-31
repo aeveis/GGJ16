@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
 	//keyboard control tweaks
 	private float keyb_timer = .2f;
 
+	//is moving timer
+	private float movedTimer=0f;
+	private float movedMaxTime = .1f;
+
     public Transform[] m_SpawnPoints;
 
     public bool m_MoveIsBlocked;
@@ -53,7 +57,9 @@ public class PlayerController : MonoBehaviour
 
     public bool IsMoving()
     {
-        return (m_MoveDir != Vector3.zero && m_CurrentSpeed > 0.0f);
+		if (m_MoveDir != Vector3.zero && m_CurrentSpeed > 0.0f)
+			movedTimer = movedMaxTime;
+		return (m_MoveDir != Vector3.zero && m_CurrentSpeed > 0.0f || movedTimer>0);
     }
 
     public bool IsSpinning()
@@ -141,6 +147,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1") && !m_Spinning)
             StartCoroutine(Spin());
+
+		if (movedTimer > 0)
+			movedTimer -= Time.fixedDeltaTime;
     }
 
     bool CheckObstacle()

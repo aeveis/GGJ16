@@ -16,7 +16,7 @@ public class CivieTouch : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision col) {
-		Debug.Log (col.gameObject.name);
+		//Debug.Log (col.gameObject.name);
 		if (col.gameObject.name == "Player") {
 			exclamation.SetActive (true);
 			SoundManager.instance.PlaySingle (m_touchedClips [Random.Range (0, m_touchedClips.Length - 1)]);
