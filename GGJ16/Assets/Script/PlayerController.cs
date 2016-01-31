@@ -68,6 +68,9 @@ public class PlayerController : MonoBehaviour
 
         m_InitialRotation = transform.rotation;
 
+        Camera.main.clearFlags = CameraClearFlags.Color;
+        Camera.main.backgroundColor = Color.black;
+
         Reset();
     }
 
