@@ -17,12 +17,17 @@ public class Hole : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-		Debug.Log("hole death");
+		//Debug.Log("hole death");
         if (other.tag == "Player")
         {
 			if (!m_isDying)
 				StartCoroutine(StartHoleDeath());
-        }
+        } 
+		if (other.attachedRigidbody.gameObject.name.Contains("Civie"))
+		{
+			StartCoroutine(StartCivFall(other.attachedRigidbody.gameObject.GetComponent<Civilian>()));
+			//other.attachedRigidbody.gameObject.SetActive(false);
+		} 
     }
 
 
@@ -46,5 +51,24 @@ public class Hole : MonoBehaviour
 		Application.LoadLevel(Application.loadedLevel);
 		//yield return new WaitForSeconds(0.1f);
 		m_isDying = false;
+	}
+
+	public IEnumerator StartCivFall(Civilian civ)
+	{
+		//PlayerController.Instance.m_MoveIsBlocked = true;
+		//m_playerPosition =  PlayerController.Instance.transform.position + (transform.position - PlayerController.Instance.transform.position).normalized * 0.5f;
+		//yield return null;
+		civ.Stop();
+		SoundManager.instance.PlaySingle(fallSound);
+		float time = 0.0f;
+		while(time < 1.0f)
+		{
+			time += Time.deltaTime;
+			civ.transform.localScale = Vector3.one * (1.0f - time);
+			//PlayerController.Instance.transform.position = m_playerPosition;
+			yield return null;
+		}
+		civ.gameObject.SetActive (false);
+
 	}
 }
