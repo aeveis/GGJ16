@@ -77,6 +77,16 @@ public class Guard : MonoBehaviour
 
     IEnumerator Caught()
     {
+        //Time.timeScale = 0.0f;
+
+        Civilian[] allcivs = GameObject.FindObjectsOfType<Civilian>();
+        foreach (Civilian c in allcivs)
+            c.Stop();
+
+        yield return null;
+
+       
+
         float timeToWait = 1.0f;
         if (m_CaughtClips.Length > 0)
         {
@@ -84,7 +94,19 @@ public class Guard : MonoBehaviour
             timeToWait = clip.length;
             SoundManager.instance.PlaySingle(clip);
         }
-        yield return new WaitForSeconds(timeToWait);
+
+        float time = 0.0f;
+        while (time < timeToWait)
+        {
+            time += Time.deltaTime;
+
+            float val = Camera.main.orthographicSize - Time.deltaTime * 20.0f;
+            if (val < 5.0f)
+                val = 5.0f;
+
+            Camera.main.orthographicSize = val;
+            yield return null;
+        }
 
 
         m_IsCaught = false;

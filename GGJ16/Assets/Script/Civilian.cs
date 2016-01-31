@@ -63,6 +63,18 @@ public class Civilian : MonoBehaviour
         }
     }
 
+    public void Stop()
+    {
+        m_IsMoving = false;
+        m_EnableMovement = false;
+    }
+
+    public bool IsGrounded()
+    {
+        RaycastHit hit;
+        return Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 1.0f + 0.2f, 1 << LayerMask.NameToLayer("Ground"));
+    }
+
     void MovePatrol()
     {
         if (m_IsMoving)
