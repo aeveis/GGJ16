@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
 
     public Transform[] m_SpawnPoints;
 
+    public bool m_MoveIsBlocked;
+
     private Quaternion m_InitialRotation;
 
     void Awake()
@@ -102,6 +104,9 @@ public class PlayerController : MonoBehaviour
             m_MoveDir.z = 1.0f;
         else
             m_MoveDir.z = 0.0f;
+
+        if (m_MoveIsBlocked)
+            m_MoveDir = Vector3.zero;
 
         if (m_MoveDir != Vector3.zero && !m_Spinning)
             transform.rotation = Quaternion.LookRotation(m_MoveDir);
