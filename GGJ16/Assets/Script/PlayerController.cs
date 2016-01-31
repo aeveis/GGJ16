@@ -54,6 +54,11 @@ public class PlayerController : MonoBehaviour
         return (m_MoveDir != Vector3.zero && m_CurrentSpeed > 0.0f);
     }
 
+    public bool IsSpinning()
+    {
+        return m_Spinning;
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -139,6 +144,8 @@ public class PlayerController : MonoBehaviour
         //Debug.DrawRay(transform.position, transform.forward, Color.red);
         return Physics.Raycast(transform.position, transform.forward, out hit, m_HitDistance);
     }
+
+
 
     IEnumerator Spin()
     {
