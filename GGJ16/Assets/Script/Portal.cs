@@ -14,4 +14,9 @@ public class Portal : MonoBehaviour
             Application.LoadLevel(nextLevel);
         }
     }
+	void Update () {
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Application.LoadLevel (0);
+		}
+	}
 }
