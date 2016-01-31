@@ -18,9 +18,10 @@ public class SoundManager : MonoBehaviour {
 	public void PlaySingle(AudioClip clip)
 	{
         GameObject mySound = new GameObject(clip.name);
+        mySound.transform.parent = transform;
         AudioSource source = mySound.AddComponent<AudioSource>();
         source.clip = clip;
-
+        source.spatialBlend = 0.0f;
         //Play the clip.
         source.volume = 1;
         source.Play ();
