@@ -10,6 +10,7 @@ public class Guard : MonoBehaviour
     public float m_Angle = 90.0f;
 
     public GameObject m_ExclamationMark;
+    public GameObject m_EyeMark;
 
     //movement att
     private float m_TimeOfArrival;
@@ -41,9 +42,16 @@ public class Guard : MonoBehaviour
         m_CurrentPathIndex = 0;
 
         foreach (PatrolPoint p in m_PatrolPath)
-            p.GetComponent<Renderer>().enabled = false;
+        {
+            Renderer r = p.GetComponent<Renderer>();
+            if(r != null)
+                r.enabled = false;
+        }
 
         m_Ritual = Instantiate(m_Ritual);
+
+        m_EyeMark.SetActive(false);
+        m_ExclamationMark.SetActive(false);
     }
 
     // Update is called once per frame
@@ -58,7 +66,9 @@ public class Guard : MonoBehaviour
 
         m_IsPlayerOnSight = isOnSight;
 
-        m_ExclamationMark.SetActive(isOnSight);
+        bool shouldEnable = isOnSight && !m_ExclamationMark.activeSelf;
+        m_EyeMark.SetActive(shouldEnable);
+
         if (m_IsPlayerOnSight && !m_Ritual.Check(transform))
         {
             //Debug.Log("RESET!!!");
@@ -77,6 +87,20 @@ public class Guard : MonoBehaviour
 
     IEnumerator Caught()
     {
+        //Time.timeScale = 0.0f;
+        m_EyeMark.SetActive(false);
+        m_ExclamationMark.SetActive(true);
+
+        Civilian[] allcivs = GameObject.FindObjectsOfType<Civilian>();
+        foreach (Civilian c in allcivs)
+            c.Stop();
+
+        yield return null;
+
+        Vector3 initialCameraPos = Camera.main.transform.position;
+        Vector3 tgt = new Vector3(transform.position.x, initialCameraPos.y, transform.position.z);
+
+
         float timeToWait = 1.0f;
         if (m_CaughtClips.Length > 0)
         {
@@ -84,7 +108,22 @@ public class Guard : MonoBehaviour
             timeToWait = clip.length;
             SoundManager.instance.PlaySingle(clip);
         }
-        yield return new WaitForSeconds(timeToWait);
+
+        float time = 0.0f;
+        while (time < timeToWait)
+        {
+            time += Time.deltaTime;
+
+            
+            Camera.main.transform.position = Vector3.Lerp(initialCameraPos, tgt, time * 0.5f);
+
+            float val = Camera.main.orthographicSize - Time.deltaTime * 15.0f;
+            if (val < 8.0f)
+                val = 8.0f;
+
+            Camera.main.orthographicSize = val;
+            yield return null;
+        }
 
 
         m_IsCaught = false;

@@ -63,6 +63,12 @@ public class Civilian : MonoBehaviour
         }
     }
 
+    public void Stop()
+    {
+        m_IsMoving = false;
+        m_EnableMovement = false;
+    }
+
     public bool IsGrounded()
     {
         RaycastHit hit;
