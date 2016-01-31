@@ -40,7 +40,8 @@ public class Civilian : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_Ritual = Instantiate(m_Ritual);
+        if (m_Ritual != null)
+            m_Ritual = Instantiate(m_Ritual);
 
 
         if (m_CurrentMovementType != MovementType.Random)
@@ -50,7 +51,8 @@ public class Civilian : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_Ritual.Action(transform);
+        if(m_Ritual != null)
+            m_Ritual.Action(transform);
 
         if (m_EnableMovement)
         {
