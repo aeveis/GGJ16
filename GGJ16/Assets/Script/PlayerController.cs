@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         m_MoveDir = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
 
@@ -114,24 +114,21 @@ public class PlayerController : MonoBehaviour
             transform.position += m_MoveDir.normalized * m_CurrentSpeed * Time.deltaTime;
         }
 
+        RaycastHit hit;
+        //Debug.DrawRay(transform.position, Vector3.down * 0.2f, Color.red);
+        m_IsJumping = !Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 1.0f + 0.2f, 1 << LayerMask.NameToLayer("Ground"));
 
-
-
-		if (transform.position.y > m_GroundLevel)
+        //Debug.Log("Is Grounded ["+!m_IsJumping+"]");
+        if (m_IsJumping)
         {
-            m_IsJumping = true;
             m_Rigidbody.velocity += Vector3.down * Time.deltaTime * m_FallSpeed;
         }
-        else if (Input.GetButtonDown("Jump") && transform.position.y <= m_GroundLevel)
+        else if (Input.GetButtonDown("Jump"))
         {
             m_Rigidbody.velocity = Vector3.up * m_JumpForce;
             //m_Rigidbody.AddForce(Vector3.up * m_JumpForce);
-            m_IsJumping = true;
         }
-        else
-        {
-            m_IsJumping = false;
-        }
+      
 
 
         if (Input.GetButtonDown("Fire1") && !m_Spinning)
