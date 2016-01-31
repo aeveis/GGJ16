@@ -4,6 +4,8 @@ using System.Collections;
 public class SoundManager : MonoBehaviour {
 	
 	public static SoundManager instance = null;
+	public AudioSource bgMusicSource;
+	public AudioClip bgMusic;
 
 	void Awake ()
 	{
@@ -13,6 +15,11 @@ public class SoundManager : MonoBehaviour {
 			Destroy (gameObject);
 
 		DontDestroyOnLoad (gameObject);
+
+		bgMusicSource = gameObject.AddComponent<AudioSource>();
+		bgMusicSource.loop = true;
+		bgMusicSource.clip = bgMusic;
+		bgMusicSource.Play ();
 	}
 
 	public void PlaySingle(AudioClip clip)
