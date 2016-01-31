@@ -58,11 +58,12 @@ public class NoLeftTurn : Ritual
     /// <param name="p_Actor"></param>
     public override void Action(Transform p_Actor)
     {
-        if (m_Rigidbody == null)
+		//change to patrol in a circle clockwise in civie
+       /* if (m_Rigidbody == null)
             m_Rigidbody = p_Actor.GetComponent<Rigidbody>();
 
         //keep rotating
-        p_Actor.transform.Rotate(new Vector3(0.0f, m_anglesPerSecond * Time.deltaTime, 0.0f));
+        p_Actor.transform.Rotate(new Vector3(0.0f, m_anglesPerSecond * Time.deltaTime, 0.0f));*/
     }
 
     public override void OnVisionConeEnter()
